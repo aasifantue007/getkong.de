@@ -1,0 +1,1 @@
+(function(){var s=document.createElement('style');s.setAttribute('data-gkmobpad','1');s.textContent='@media(max-width:767px){html body .gk-nav.gk-nav{min-height:80px!important;box-sizing:border-box!important}}';(document.head||document.documentElement).appendChild(s);})();

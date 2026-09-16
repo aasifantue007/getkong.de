@@ -1,0 +1,1 @@
+(function(){function fix(){try{document.querySelectorAll('a.navbar_logo-link,a[href="/old-home"],a[href="/old-home/"]').forEach(function(a){a.setAttribute('href','/');});}catch(e){}}if(document.readyState!=='loading')fix();document.addEventListener('DOMContentLoaded',fix);setTimeout(fix,800);})();

@@ -1,0 +1,1 @@
+(function(){var s=document.createElement('style');s.setAttribute('data-gkbtnhover','1');s.textContent="html body .gk-proc-cta:hover,html body .gk-proc-cta:hover *{color:#C2E67E!important;-webkit-text-fill-color:#C2E67E!important}";(document.head||document.documentElement).appendChild(s);})();

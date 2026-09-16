@@ -1,0 +1,177 @@
+<!-- =====================================================================
+     getkong.delivery — SITE-WIDE HEAD CODE
+     Project Settings → Custom Code → Head Code
+     (identical to getkong.shop)
+     ===================================================================== -->
+
+<!-- Finsweet Attributes -->
+<script async type="module" src="https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js" fs-list></script>
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-MQ6ZKHHR');
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- A/B Testing -->
+<link rel="preconnect" href="https://events.drip-apex.com" crossorigin>
+<script src="https://events.drip-apex.com/s/989c7894-592b-4448-81b0-14fbc2863bf4.js"></script>
+<!-- End A/B Testing -->
+
+<!--  PostHog: loaded via load-posthog.js (see README for migration details)  -->
+<script src="https://cdn.getkong.de/js/load-posthog.js"></script>
+
+<!-- UTM Params tooling -->
+<script src="https://cdn.getkong.de/js/load-utm.js"></script>
+
+<!-- TrustBox script -->
+<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+<!-- End TrustBox script -->
+
+<meta content="noindex" name="robots" />
+
+<!-- Twitter conversion tracking base code -->
+<script>
+  !(function (e, t, n, s, u, a) {
+    e.twq ||
+      ((s = e.twq =
+        function () {
+          s.exe ? s.exe.apply(s, arguments) : s.queue.push(arguments);
+        }),
+      (s.version = '1.1'),
+      (s.queue = []),
+      (u = t.createElement(n)),
+      (u.async = !0),
+      (u.src = 'https://static.ads-twitter.com/uwt.js'),
+      (a = t.getElementsByTagName(n)[0]),
+      a.parentNode.insertBefore(u, a));
+  })(window, document, 'script');
+  twq('config', 'qo20f');
+</script>
+<!-- End Twitter conversion tracking base code -->
+
+<!-- =============================================================
+     BLÜTE LANDING PAGE — PAGE HEAD CODE
+     Page Settings → Inside <head> tag. Replaces everything currently there.
+
+     Changes made while consolidating:
+       - The "MOBILE TYPE CORRECTIONS" block was pasted TWICE (an older
+         copy using .gk-h1 and a newer one using .gk-hero-2 .gk-h1).
+         Removed both duplicates.
+       - The H1 fix is gone from here entirely. The clamp that was
+         capping the headline at 37px lives in FOOTER Block E, and it is
+         now corrected at source — no override needed. See file 2.
+       - What remains here is the slider plus the two step type values
+         that genuinely belong to this page.
+     ============================================================= -->
+
+<!-- ---------- TESTIMONIAL SLIDER ----------
+     The 12 cards are REAL WEBFLOW ELEMENTS (.bl-tcard) built on the canvas, so
+     they are visible and editable in the Designer — same as getkong.de, where
+     the cards live in the Navigator under gk-ttrack.
+     This script only drives BEHAVIOUR: dot navigation, 4.5s autoplay that pauses
+     on hover, and touch swipe. It does not generate any card markup, so adding
+     or editing a testimonial is done in Webflow, not in code.
+     3 cards per view on desktop / 2 on tablet / 1 on mobile.
+     NOTE: track and dots are matched by prefix because Webflow renamed the
+     classes to gk-ttrack-1 / gk-tdots-1 to avoid a collision. -->
+<style>
+.bl-tcard { transition: transform .25s, box-shadow .25s; }
+.bl-tcard:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,.12); }
+.bl-tavatar { transform: translateX(-50%); }
+
+[class*="gk-ttrack"] { transition: transform .5s cubic-bezier(.4,0,.2,1); touch-action: pan-y; }
+
+.gk-tdot { opacity: .3; cursor: pointer; background-color: #284824; border-radius: 999px; width: 8px; height: 8px; transition: width .3s, opacity .3s; }
+.gk-tdot-active { opacity: 1; width: 32px; }
+
+@media (max-width: 991px) {
+  .bl-tcard { flex-basis: calc((100% - 24px) / 2); }
+}
+
+@media (max-width: 767px) {
+  .bl-tcard   { flex-basis: 100%; }
+  .bl-testi   { padding-left: 20px !important; padding-right: 20px !important; }
+  .bl-testi-h2 { font-size: clamp(28px, 8vw, 40px) !important; }
+
+  /* Step number — design 40px, was rendering 56px */
+  .gk-step-num { font-size: 40px !important; }
+
+  /* Step title — design 24px, was rendering 26px */
+  .gk-step-title,
+  .gk-step-title.gk-step-title-dim { font-size: 24px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="gk-ttrack"] { transition: none !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var slider = document.querySelector('.gk-tslider'); if (!slider) return;
+  var track = slider.querySelector('[class*="gk-ttrack"]');
+  var dotsWrap = slider.querySelector('[class*="gk-tdots"]');
+  if (!track || !dotsWrap) return;
+
+  /* cards are authored in Webflow — just read them */
+  var cards = [].slice.call(track.querySelectorAll('.bl-tcard'));
+  if (!cards.length) return;
+
+  var current = 0, timer;
+
+  function perView(){ var w = window.innerWidth; return w <= 767 ? 1 : (w <= 991 ? 2 : 3); }
+  function groups(){ return Math.max(1, Math.ceil(cards.length / perView())); }
+
+  function render(){
+    var g = groups(); if (current > g - 1) current = g - 1;
+    var first = cards[current * perView()];
+    var base = cards[0].offsetLeft;
+    track.style.transform = 'translateX(' + (-((first ? first.offsetLeft : 0) - base)) + 'px)';
+    var d = dotsWrap.children;
+    for (var k = 0; k < d.length; k++) d[k].className = 'gk-tdot' + (k === current ? ' gk-tdot-active' : '');
+  }
+
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    for (var k = 0; k < groups(); k++){
+      var dot = document.createElement('div');
+      dot.className = 'gk-tdot';
+      (function(i){ dot.addEventListener('click', function(){ current = i; render(); start(); }); })(k);
+      dotsWrap.appendChild(dot);
+    }
+    render();
+  }
+
+  function next(){ current = (current + 1) % groups(); render(); }
+  function prev(){ current = (current - 1 + groups()) % groups(); render(); }
+  function start(){ clearInterval(timer); timer = setInterval(next, 4500); }
+
+  slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  slider.addEventListener('mouseleave', start);
+
+  var tsx = 0, tsy = 0, sw = false;
+  slider.addEventListener('touchstart', function(e){
+    var t = e.touches[0]; tsx = t.clientX; tsy = t.clientY; sw = true; clearInterval(timer);
+  }, { passive: true });
+  slider.addEventListener('touchend', function(e){
+    if (!sw) return; sw = false;
+    var t = e.changedTouches[0], dx = t.clientX - tsx, dy = t.clientY - tsy;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
+    start();
+  }, { passive: true });
+
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(buildDots, 150); });
+
+  buildDots(); start();
+});
+</script>

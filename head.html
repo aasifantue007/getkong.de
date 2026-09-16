@@ -1,0 +1,239 @@
+<!-- =====================================================================
+     GETKONG — SITE-WIDE HEAD CODE
+     Project Settings → Custom Code → Head Code
+     ===================================================================== -->
+
+<!-- Cross-domain consent receiver. MUST be above the CookieScript snippet.
+     Canonical source: apps/webflow/src/head/snippets.html
+     If you edit this in Webflow, also update the repo. -->
+<script>
+  (function () {
+    try {
+      var match = location.search.match(/[?&]CookieScriptConsent=([^&]*)/);
+      if (!match) return;
+      var decodedValue;
+      try {
+        decodedValue = decodeURIComponent(match[1]);
+      } catch (e) {
+        return; // malformed token, bail
+      }
+      var expires = new Date();
+      expires.setDate(expires.getDate() + 365);
+      // domain=.getkong.de so shop.getkong.de can read the cookie written on www.getkong.de.
+      // Without this attribute the cookie is host-only and CookieScript on shop shows the banner again.
+      var domainAttr = /(^|\.)getkong\.de$/.test(location.hostname) ? '; domain=.getkong.de' : '';
+      document.cookie = 'CookieScriptConsent=' + decodedValue
+        + '; expires=' + expires.toUTCString()
+        + '; path=/'
+        + '; SameSite=Lax'
+        + domainAttr
+        + (location.protocol === 'https:' ? '; Secure' : '');
+      var cleanSearch = location.search.replace(/[?&]CookieScriptConsent=[^&]*/, '').replace(/^&/, '?');
+      if (cleanSearch === '?') cleanSearch = '';
+      if (cleanSearch !== location.search) {
+        history.replaceState(history.state, '', location.pathname + cleanSearch + location.hash);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<!-- Finsweet Attributes -->
+<script async type="module" src="https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js" fs-list></script>
+<!-- End Finsweet -->
+
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-MQ6ZKHHR');
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- A/B Testing -->
+<link rel="preconnect" href="https://events.drip-apex.com" crossorigin>
+<script src="https://events.drip-apex.com/s/989c7894-592b-4448-81b0-14fbc2863bf4.js"></script>
+<!-- End A/B Testing -->
+
+<!--  PostHog: loaded via load-posthog.js (see README for migration details)  -->
+<script src="https://cdn.getkong.de/js/load-posthog.js"></script>
+
+<!-- UTM Params tooling -->
+<script src="https://cdn.getkong.de/js/load-utm.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.getkong.de/#organization",
+    "name": "GETKONG",
+    "url": "https://www.getkong.de/",
+    "legalName": "Fast Green Delivery UG",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdn.prod.website-files.com/68c9321bb07942194167c67c/6a58f2d77b9d28d6959b1d7f_GETKONG-green.svg"
+    },
+    "email": "info@getkong.app",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Friedrichstraße 155",
+      "postalCode": "10117",
+      "addressLocality": "Berlin",
+      "addressCountry": "DE"
+    },
+    "sameAs": [
+      "https://www.instagram.com/getkong.info/"
+    ]
+  }
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.getkong.de/#website",
+    "url": "https://www.getkong.de/",
+    "name": "GETKONG",
+    "inLanguage": "de-DE",
+    "publisher": {
+      "@id": "https://www.getkong.de/#organization"
+    }
+  }
+</script>
+
+<!-- ===== 2. TESTIMONIAL SLIDER (12 reviews) ===== -->
+<style>
+.gk-card-initials { display:flex; align-items:center; justify-content:center; background:#284824; color:#C2E67E; font-family:'Oswald',sans-serif; font-weight:700; font-size:38px; }
+.gk-stars-uni { color:#284824; font-size:22px; letter-spacing:4px; line-height:1; }
+.gk-ttrack { transition: transform .5s cubic-bezier(.4,0,.2,1); touch-action: pan-y; }
+@media (max-width: 991px){ .gk-tcard{ flex-basis: calc((100% - 24px) / 2); } }
+@media (max-width: 767px){ .gk-tcard{ flex-basis: 100%; } }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // ===== EDIT REVIEWS HERE (name, city, avatar URL or "", quote) =====
+  var REVIEWS = [
+    {n:'Marta L.', c:'Berlin', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a4f841961304d3b9caa919a_avatar-marta.jpg', q:'Um 14 Uhr den Antrag gestellt, um kurz nach 15 Uhr war die Lieferung bereits da. So schnell und professionell hätte ich es nicht erwartet.'},
+    {n:'Andreas S.', c:'Hamburg', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a4f841b8f77d139b1f65083_avatar-andreas.jpg', q:'Ich war ehrlich überrascht, wie unkompliziert alles ablief. Fragebogen ausgefüllt, ärztlich geprüft und noch am selben Tag das Rezept erhalten. Die Lieferung kam sogar schneller als angekündigt.'},
+    {n:'Kleo R.', c:'München', a:'https://cdn.prod.website-files.com/68c9321bb07942194167c67c/6a5e1a0dd73f5cda6c68cd64_Frame%2045.png', q:'Der gesamte Prozess wirkte seriös und vertrauenswürdig. Keine komplizierten Termine, keine langen Wartezeiten und jederzeit ein klarer Überblick über den Status meiner Behandlung.'},
+    {n:'Lea M.', c:'Köln', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a957ee7ff762362185e5_avatar-lea.jpg', q:'Ich war überrascht, wie unkompliziert alles lief. Der Fragebogen war schnell erledigt und die Rückmeldung kam viel schneller als erwartet.'},
+    {n:'Jonas R.', c:'Berlin', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a95948dc54aff9235366_avatar-jonas.jpg', q:'Endlich ein Prozess, der verständlich ist. Keine langen Wege, keine Unsicherheit – ich wusste immer, was als Nächstes passiert.'},
+    {n:'Sabine K.', c:'Hamburg', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a95addd009e53e23a815_avatar-sabine.jpg', q:'Seriös, transparent und unkompliziert.'},
+    {n:'Daniel P.', c:'München', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a953dd0bbf131365c471_avatar-daniel.jpg', q:'Alles lief digital und ohne Umwege. Genau das habe ich gesucht.'},
+    {n:'Mira T.', c:'Düsseldorf', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a95c00b9a2a6ce3a29c9_avatar-mira.jpg', q:'Die Lieferung kam pünktlich und war so diskret verpackt, dass ich mir darüber wirklich keine Gedanken machen musste. Für mich war das sehr angenehm.'},
+    {n:'Thomas B.', c:'Stuttgart', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a95dbed6c6d576177748_avatar-thomas.jpg', q:'Ich hatte zuerst einige Fragen, aber der Ablauf war klar erklärt. Am Ende war es einfacher, als ich erwartet hatte.'},
+    {n:'Nadine S.', c:'Frankfurt', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a95f00b9a2a6ce3a2b17_avatar-nadine.jpg', q:'Sehr gut begleitet.'},
+    {n:'Mehmet A.', c:'Hannover', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a96090c3dfa2b7aa6913_avatar-mehmet.jpg', q:'Mir war wichtig, dass alles legal, diskret und nachvollziehbar abläuft. Genau diesen Eindruck hatte ich während des gesamten Prozesses.'},
+    {n:'Clara W.', c:'Leipzig', a:'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/6a54a956f05cb9b01235b54b_avatar-clara.jpg', q:'Kein Papierkram, kein Hin und Her. Der digitale Ablauf hat mir viel Zeit gespart.'}
+  ];
+  // ===================================================================
+  var slider = document.querySelector('.gk-tslider'); if (!slider) return;
+  var track = slider.querySelector('.gk-ttrack');
+  var dotsWrap = slider.querySelector('.gk-tdots');
+  function initials(n){ return n.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase(); }
+  track.innerHTML = REVIEWS.map(function(r){
+    var av = r.a ? '<img class="gk-card-avatar" src="'+r.a+'" alt="'+r.n+'"/>'
+                 : '<div class="gk-card-avatar gk-card-initials">'+initials(r.n)+'</div>';
+    return '<div class="gk-card gk-tcard">'+av+
+      '<p class="gk-quote">„'+r.q+'“</p>'+
+      '<div class="gk-card-meta"><div class="gk-card-name">'+r.n+'</div>'+
+      '<div class="gk-card-loc">Verifizierte Behandlung · '+r.c+'</div></div></div>';
+  }).join('');
+  var cards = [].slice.call(track.children), current = 0, timer;
+  function perView(){ var w = window.innerWidth; return w <= 767 ? 1 : (w <= 991 ? 2 : 3); }
+  function groups(){ return Math.max(1, Math.ceil(cards.length / perView())); }
+  function render(){
+    var g = groups(); if (current > g-1) current = g-1;
+    var first = cards[current * perView()];
+    var base = cards.length ? cards[0].offsetLeft : 0;
+    track.style.transform = 'translateX(' + (-((first ? first.offsetLeft : 0) - base)) + 'px)';
+    var d = dotsWrap.children; for (var k=0;k<d.length;k++) d[k].className = 'gk-tdot' + (k===current?' gk-tdot-active':'');
+  }
+  function buildDots(){ dotsWrap.innerHTML=''; for (var k=0;k<groups();k++){ var dot=document.createElement('div'); dot.className='gk-tdot'; (function(i){ dot.addEventListener('click', function(){ current=i; render(); start(); }); })(k); dotsWrap.appendChild(dot);} render(); }
+  function next(){ current=(current+1)%groups(); render(); }
+  function start(){ clearInterval(timer); timer=setInterval(next, 4500); }
+  slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  slider.addEventListener('mouseleave', start);
+  function prev(){ current=(current-1+groups())%groups(); render(); }
+  var tsx=0, tsy=0, sw=false;
+  slider.addEventListener('touchstart', function(e){ var t=e.touches[0]; tsx=t.clientX; tsy=t.clientY; sw=true; clearInterval(timer); }, {passive:true});
+  slider.addEventListener('touchend', function(e){ if(!sw) return; sw=false; var t=e.changedTouches[0], dx=t.clientX-tsx, dy=t.clientY-tsy; if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? next() : prev(); } start(); }, {passive:true});
+  var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(buildDots, 150); });
+  buildDots(); start();
+});
+</script>
+
+<!-- ===== 3. FAQ ACCORDION ===== -->
+<style>
+.gk-acc2-head { cursor: pointer; }
+.gk-acc2-body { max-height: 0; overflow: hidden; transition: max-height .45s ease; }
+.gk-acc2-ico::before, .gk-acc2-ico::after { content:''; position:absolute; left:50%; top:50%; width:14px; height:2px; background:#C2E67E; border-radius:2px; transform:translate(-50%,-50%); transition:transform .3s ease, opacity .3s ease; }
+.gk-acc2-ico::after { transform: translate(-50%,-50%) rotate(90deg); }
+.gk-acc2.gk-open .gk-acc2-ico::after { opacity: 0; transform: translate(-50%,-50%) rotate(0deg); }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var items = [].slice.call(document.querySelectorAll('.gk-acc2'));
+  function close(it){ it.classList.remove('gk-open'); it.querySelector('.gk-acc2-body').style.maxHeight = '0px'; }
+  function open(it){ it.classList.add('gk-open'); var b = it.querySelector('.gk-acc2-body'); b.style.maxHeight = b.scrollHeight + 'px'; }
+  items.forEach(function (it) {
+    close(it);
+    it.querySelector('.gk-acc2-head').addEventListener('click', function () {
+      var wasOpen = it.classList.contains('gk-open');
+      items.forEach(close);
+      if (!wasOpen) open(it);
+    });
+  });
+  /* start with all FAQ items closed */
+});
+</script>
+
+<!-- ===== 4. STICKY HEADER (transparent; buttons at top, logo-only on scroll) ===== -->
+<style>
+.gk-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: transparent !important; box-shadow: none !important; }
+.gk-nav.gk-scrolled { background: transparent !important; box-shadow: none !important; }
+/* remove text nav links everywhere; keep buttons on desktop/tablet */
+.gk-nav .gk-nav-links, .gk-nav .gk-nav-link, .gk-burger { display: none !important; }
+/* logo-only, centered header on EVERY page (sub-pages had the buttons showing) */
+.gk-nav { justify-content: center !important; }
+.gk-nav .gk-nav-right, .gk-nav .gk-btn, .gk-nav .gk-btn-green { display: none !important; }
+/* no white gap below the footer on the short LEGAL pages (Impressum/AGB/Datenschutz).
+   Scoped with :has(.gk-legal) so it never darkens the homepage, Fragebogen, etc. */
+body:has(.gk-legal) { background-color: #121212 !important; }
+.gk-nav .gk-logo { width: auto !important; height: auto !important; }
+.gk-nav .gk-logo-img { height: 82px !important; width: auto !important; transition: height .3s ease; }
+.gk-nav .gk-nav-right { transition: opacity .3s ease, visibility .3s ease; }
+/* on scroll: buttons fade out, smaller logo stays */
+.gk-nav.gk-scrolled .gk-nav-right { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+.gk-nav.gk-scrolled .gk-logo-img { height: 64px !important; }
+.gk-hero { padding-top: 100px; }
+/* mobile = logo only (hide both buttons + whatsapp) */
+@media (max-width: 767px){ .gk-hero { padding-top: 116px; } .gk-nav .gk-logo-img { height: 56px !important; } .gk-nav.gk-scrolled .gk-logo-img { height: 44px !important; } .gk-nav .gk-nav-right, .gk-nav .gk-btn, .gk-nav .gk-btn-green { display: none !important; } }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){var n=document.querySelector('.gk-nav');if(!n)return;function s(){n.classList.toggle('gk-scrolled',(window.pageYOffset||0)>60);}window.addEventListener('scroll',s,{passive:true});s();});
+</script>
+
+<!-- ===== 5. TABLET PORTRAIT RESPONSIVE (768-1100px, incl. iPad Pro) ===== -->
+<style>
+@media (min-width: 768px) and (max-width: 1279px){
+  /* Hero stacks below 1280 (fixed 561px image needs a wide left column for the H1) */
+  .gk-hero-body{ flex-direction: column !important; align-items: stretch !important; grid-row-gap: 32px !important; padding-bottom: 64px !important; }
+  .gk-hero-left{ max-width: none !important; width: 100% !important; }
+  .gk-hero-media{ width: 100% !important; height: 460px !important; flex: 0 0 auto !important; }
+}
+/* Sections stack only at real tablet/mobile (<=991), full-width columns */
+@media (max-width: 991px){
+  .gk-lab, .gk-partner, .gk-faq, .gk-about{ flex-direction: column !important; align-items: stretch !important; grid-row-gap: 40px !important; }
+  .gk-partner-img-wrap, .gk-faq-img-wrap, .gk-about-img-wrap{ width: 100% !important; flex: 0 0 auto !important; }
+}
+</style>
+
+<!-- ===== 6. EXTRA CLOUD ON LAB SECTION (mobile) ===== -->
+<script>
+document.addEventListener('DOMContentLoaded',function(){if(window.innerWidth>767)return;var l=document.querySelector('.gk-lab'),s=document.querySelector('.gk-cloud-img');if(!l||!s)return;if(getComputedStyle(l).position==='static')l.style.position='relative';var i=document.createElement('img');i.src=s.getAttribute('src');i.alt='';i.style.cssText='position:absolute;left:-30px;top:37%;width:168px;height:auto;z-index:0;pointer-events:none;opacity:.92';l.appendChild(i);});
+</script>

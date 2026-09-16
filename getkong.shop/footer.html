@@ -1,0 +1,755 @@
+<!-- =====================================================================
+     getkong.shop — SITE-WIDE FOOTER CODE
+     Project Settings → Custom Code → Footer Code
+     (identical to getkong.delivery)
+     ===================================================================== -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQ6ZKHHR" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuLinks = document.querySelectorAll('.nav_link');
+    const menuButton = document.querySelector('.navbar_menu-button');
+
+    function enableMobileMenuClose() {
+      menuLinks.forEach((link) => link.addEventListener('click', closeMenuOnClick));
+    }
+
+    function disableMobileMenuClose() {
+      menuLinks.forEach((link) => link.removeEventListener('click', closeMenuOnClick));
+    }
+
+    function closeMenuOnClick() {
+      setTimeout(() => {
+        if (menuButton) menuButton.click();
+      }, 100);
+    }
+
+    function checkBreakpoint() {
+      if (window.innerWidth <= 991) {
+        enableMobileMenuClose();
+      } else {
+        disableMobileMenuClose();
+      }
+    }
+
+    checkBreakpoint();
+    window.addEventListener('resize', checkBreakpoint);
+  });
+</script>
+
+<style>
+body { background-color: #FFFBEF; }
+</style>
+<style>
+.gk-cloud, .gk-cloud-2 { animation: none !important; will-change: auto; }
+.gk-cloud-img, .gk-deco-broc-tr, .gk-deco-broc-bl { will-change: transform; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  var clouds = [].slice.call(document.querySelectorAll('.gk-cloud, .gk-cloud-2'));
+  var logos  = [].slice.call(document.querySelectorAll('.gk-deco-outline-tl, .gk-deco-outline-br'));
+  var vegs   = [].slice.call(document.querySelectorAll('.gk-deco-broc-tr, .gk-deco-broc-bl'));
+  if (!clouds.length && !logos.length && !vegs.length) return;
+  clouds.forEach(function (c, i) {
+    c.setAttribute('data-dir',   (i % 2 === 0) ? -1 : 1);
+    c.setAttribute('data-speed', (0.20 + (i % 3) * 0.06).toFixed(3));
+  });
+  function apply() {
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var t  = Date.now();
+    clouds.forEach(function (c) {
+      var img = c.querySelector('.gk-cloud-img') || c;
+      var r   = c.getBoundingClientRect();
+      var delta = (r.top + r.height / 2) - vh / 2;
+      var s   = parseFloat(c.getAttribute('data-speed')) || 0.12;
+      var dir = parseFloat(c.getAttribute('data-dir'))   || -1;
+      img.style.transform = 'translateX(' + (dir * -delta * s).toFixed(1) + 'px)';
+    });
+    logos.forEach(function (el) {
+      var sec = el.closest('.gk-proc') || el;
+      var r = sec.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+      el.style.transform = 'translateX(' + ((0.5 - p) * 320).toFixed(1) + 'px)';
+    });
+    vegs.forEach(function (el, i) {
+      var sec = el.closest('.gk-proc') || el;
+      var r = sec.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+      var dir = (i % 2 === 0) ? 1 : -1;
+      el.style.transform = 'translateX(' + (dir * (p - 0.5) * 150).toFixed(1) + 'px) translateY(' + (Math.sin(t / 700 + i) * -14).toFixed(1) + 'px)';
+    });
+  }
+  (function loop(){ apply(); requestAnimationFrame(loop); })();
+  window.addEventListener('resize', apply, { passive: true });
+});
+</script>
+<style>
+.gk-nav { transition: height .28s ease, padding .28s ease; }
+.gk-nav .gk-logo { transition: width .28s ease, height .28s ease; }
+.gk-nav.bl-shrink { height: 76px !important; padding-top: 12px !important; padding-bottom: 12px !important; }
+.gk-nav.bl-shrink .gk-logo { width: 108px !important; height: 47px !important; }
+@media (max-width: 767px) {
+  .gk-nav.bl-shrink { height: 62px !important; padding-top: 8px !important; padding-bottom: 8px !important; }
+  .gk-nav.bl-shrink .gk-logo { width: 92px !important; height: 40px !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var nav = document.querySelector('.gk-nav');
+  if (!nav) return;
+  var ticking = false;
+  function upd(){
+    nav.classList.toggle('bl-shrink', (window.pageYOffset || document.documentElement.scrollTop || 0) > 40);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ requestAnimationFrame(upd); ticking = true; }
+  }, { passive: true });
+  upd();
+});
+</script>
+<style>
+.gk-wa-float {
+  position: fixed; right: 22px; bottom: 22px; z-index: 99999;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 26px; background: #34503A; color: #fff;
+  font-family: "Satoshi", sans-serif; font-weight: 700; font-size: 17px; line-height: 1;
+  border-radius: 14px; text-decoration: none;
+  box-shadow: 0 8px 22px rgba(0,0,0,.28);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.gk-wa-float:hover { transform: translateY(-2px); box-shadow: 0 11px 26px rgba(0,0,0,.32); }
+.gk-wa-float svg { width: 24px; height: 24px; display: block; flex: 0 0 auto; }
+.gk-mobilebar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 99998;
+  display: none; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 0 16px calc(14px + env(safe-area-inset-bottom));
+  background: transparent; pointer-events: none;
+}
+.gk-mobilebar > * { pointer-events: auto; }
+.gk-mobilebar-wa {
+  flex: 0 0 auto; width: 58px; height: 58px; border-radius: 50%;
+  background: #34503A; display: inline-flex; align-items: center; justify-content: center;
+  text-decoration: none; box-shadow: 0 6px 16px rgba(0,0,0,.22);
+}
+.gk-mobilebar-wa svg { width: 28px; height: 28px; }
+.gk-mobilebar-cta {
+  flex: 0 0 auto; height: 58px; padding: 0 28px; border-radius: 999px;
+  background: #C2E67E; color: #121212;
+  font-family: "Satoshi", sans-serif; font-weight: 700; font-size: 17px;
+  display: inline-flex; align-items: center; gap: 8px;
+  text-decoration: none; box-shadow: 0 6px 16px rgba(0,0,0,.18);
+}
+@media (max-width: 767px) {
+  .gk-wa-float          { display: none !important; }
+  .gk-mobilebar.gk-show { display: flex; }
+}
+</style>
+<script>
+(function(){
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  ready(function(){
+    var WA_HREF  = 'https://api.whatsapp.com/send/?phone=%2B4915229292830&text=Hallo+liebes+GETKONG+Team%21+Mein+Name%3A+Meine+Bestellnummer%2F+E-Mail%3A+Mein+Anliegen%3A+K%C3%B6nnt+ihr+euch+das+bitte+anschauen%3F+Danke+euch%21&type=phone_number&app_absent=0';
+    var CTA_HREF = 'https://www.getkong.de/fragebogen';
+    var WA_SVG   = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.157 5.335 5.492 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.599 5.393l-.999 3.648 3.889-1.34zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.385-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414z"/></svg>';
+    if (!document.querySelector('.gk-wa-float')) {
+      var a = document.createElement('a');
+      a.className = 'gk-wa-float';
+      a.href = WA_HREF; a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label','Chat via WhatsApp');
+      a.innerHTML = WA_SVG + 'Chat via WhatsApp';
+      document.body.appendChild(a);
+    }
+    if (!document.querySelector('.gk-mobilebar')) {
+      var bar = document.createElement('div');
+      bar.className = 'gk-mobilebar';
+      bar.innerHTML =
+        '<a class="gk-mobilebar-wa" href="' + WA_HREF + '" target="_blank" rel="noopener" aria-label="Chat via WhatsApp">' + WA_SVG + '</a>' +
+        '<a class="gk-mobilebar-cta" href="' + CTA_HREF + '" target="_blank" rel="noopener">Jetzt loslegen &#8594;</a>';
+      document.body.appendChild(bar);
+      var hero = document.querySelector('.gk-hero-2, .gk-hero');
+      var onS = function(){
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var limit = hero ? hero.offsetHeight * 0.6 : window.innerHeight * 0.8;
+        bar.classList.toggle('gk-show', y > limit);
+      };
+      window.addEventListener('scroll', onS, { passive: true });
+      window.addEventListener('resize', onS, { passive: true });
+      onS();
+    }
+  });
+})();
+</script>
+<style>
+.gk-trustbar { overflow: hidden; padding-left: 0 !important; padding-right: 0 !important; justify-content: flex-start !important; flex-wrap: nowrap !important; }
+.gk-trust-track { display: flex; flex-wrap: nowrap; align-items: center; width: max-content; will-change: transform; animation: gkMarquee 36s linear infinite; }
+.gk-trust-track > * { margin-right: 24px; flex: 0 0 auto; }
+.gk-badge { border-width: 1px !important; }
+@keyframes gkMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (min-width: 1280px) { .gk-trustbar { margin-top: -72px !important; } }
+@media (max-width: 767px) {
+  .gk-trustbar { margin-top: 14px !important; padding-bottom: 12px !important; }
+  .gk-badge { height: 38px !important; padding-left: 14px !important; padding-right: 14px !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var bar = document.querySelector('.gk-trustbar');
+  if (!bar || bar.querySelector('.gk-trust-track')) return;
+  var track = document.createElement('div');
+  track.className = 'gk-trust-track';
+  while (bar.firstChild) { track.appendChild(bar.firstChild); }
+  [].slice.call(track.children).forEach(function(n){ track.appendChild(n.cloneNode(true)); });
+  bar.appendChild(track);
+});
+</script>
+<style>
+@media (max-width: 767px) {
+  .gk-nav .gk-logo { margin-left: auto !important; margin-right: auto !important; }
+  .gk-hero-2 { padding-top: 78px !important; }
+  .gk-hero-body { margin-top: 0 !important; padding: 0 20px !important; flex-direction: column !important; row-gap: 0 !important; gap: 0 !important; }
+  .gk-hero-left { row-gap: 2px !important; align-items: center !important; text-align: left !important; width: 100% !important; }
+  .gk-h1, .gk-h1-green, .subheading, .gk-sub { text-align: center !important; }
+  .gk-trustpill { align-self: center !important; margin: 0 auto 4px !important; transform: scale(.82) !important; transform-origin: center !important; }
+  .gk-hero-media { width: calc(100% - 40px) !important; height: 290px !important; align-self: center !important; margin: 22px 20px 0 !important; position: relative !important; z-index: 2 !important; }
+  .gk-h1, .gk-h1-green { font-size: 32px !important; line-height: 1.08 !important; }
+  .gk-h1 br { display: none !important; }
+  .gk-h1 .gk-h1-green::before { content: "\00a0"; }
+  .subheading { font-size: clamp(12px, 4.4vw, 18px) !important; line-height: 1.2 !important; margin-top: 2px !important; }
+  .gk-sub { font-size: clamp(11px, 3.9vw, 15px) !important; line-height: 1.4 !important; }
+  .gk-hero-2 .bl-btn-primary { display: flex !important; width: 100% !important; justify-content: center !important; align-items: center !important; text-align: center !important; min-height: 56px !important; font-size: 18px !important; margin-top: 6px !important; }
+  .bl-microcopy { display: none !important; }
+  .gk-cloud-img { width: 100% !important; height: 100% !important; object-fit: contain !important; }
+  .gk-cloud.gk-cloud-a { display: block !important; left: -20px !important; right: auto !important; top: 150px !important; width: 150px !important; height: 97px !important; }
+  .gk-cloud.gk-cloud-b { display: block !important; left: auto !important; right: -18px !important; top: 105px !important; width: 165px !important; height: 107px !important; }
+  .gk-cloud.gk-cloud-c { display: block !important; left: auto !important; right: -10px !important; top: 470px !important; width: 150px !important; height: 98px !important; }
+  .gk-cloud.gk-cloud-d { display: block !important; left: -14px !important; right: auto !important; top: 640px !important; width: 130px !important; height: 85px !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var body  = document.querySelector('.gk-hero-body'),
+      pill  = document.querySelector('.gk-trustpill'),
+      media = document.querySelector('.gk-hero-media');
+  if (!body || !pill || !media) return;
+  function order(){
+    if (window.innerWidth <= 767){
+      if (pill.nextElementSibling !== media) pill.insertAdjacentElement('afterend', media);
+    } else if (media.parentNode !== body){
+      body.appendChild(media);
+    }
+  }
+  order();
+  var t;
+  window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(order, 150); });
+});
+</script>
+<style>
+.gk-proc .gk-step .gk-step-img { display: block !important; }
+.gk-steps .gk-step,
+.gk-steps .gk-step.gk-step-active { border-color: rgba(194,230,126,.3) !important; transform: none; transition: border-color .4s ease, transform .4s ease; }
+.gk-steps .gk-step .gk-step-num,
+.gk-steps .gk-step .gk-step-title { opacity: .4; transition: opacity .4s ease; }
+.gk-steps .gk-step.gk-active { border-color: #C2E67E !important; transform: translateY(-6px); }
+.gk-steps .gk-step.gk-active .gk-step-num,
+.gk-steps .gk-step.gk-active .gk-step-title { opacity: 1; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var steps = [].slice.call(document.querySelectorAll('.gk-steps .gk-step'));
+  if (!steps.length) return;
+  var section = document.querySelector('.gk-proc') || steps[0].parentNode;
+  var ticking = false;
+  function upd(){
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var vc = vh / 2;
+    var r0 = steps[0].getBoundingClientRect();
+    var r1 = steps.length > 1 ? steps[1].getBoundingClientRect() : r0;
+    var stacked = Math.abs(r1.top - r0.top) > 20;
+    var idx = 0;
+    if (stacked) {
+      var bestD = Infinity;
+      steps.forEach(function(s, i){
+        var r = s.getBoundingClientRect();
+        var d = Math.abs((r.top + r.height / 2) - vc);
+        if (d < bestD) { bestD = d; idx = i; }
+      });
+    } else {
+      var rs = section.getBoundingClientRect();
+      var centre = rs.top + rs.height / 2;
+      var p = (vh * 0.85 - centre) / (vh * 0.7);
+      p = Math.max(0, Math.min(0.9999, p));
+      idx = Math.floor(p * steps.length);
+    }
+    if (idx > steps.length - 1) idx = steps.length - 1;
+    steps.forEach(function(s, i){ s.classList.toggle('gk-active', i === idx); });
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ requestAnimationFrame(upd); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', upd, { passive: true });
+  upd();
+});
+</script>
+<style>
+.gk-faq .gk-faq-img { position: relative; z-index: 2; }
+.gk-acc2-head { cursor: pointer; }
+.gk-acc2-body { max-height: 0; overflow: hidden; transition: max-height .45s ease; }
+.gk-acc2-ico  { position: relative; }
+.gk-acc2-ico::before,
+.gk-acc2-ico::after { content: ''; position: absolute; left: 50%; top: 50%; width: 14px; height: 2px; background: #C2E67E; border-radius: 2px; transform: translate(-50%,-50%); transition: transform .3s ease, opacity .3s ease; }
+.gk-acc2-ico::after { transform: translate(-50%,-50%) rotate(90deg); }
+.gk-acc2.gk-open .gk-acc2-ico::after { opacity: 0; transform: translate(-50%,-50%) rotate(0deg); }
+@media (max-width: 991px) {
+  .gk-faq { flex-direction: column !important; align-items: stretch !important; row-gap: 40px !important; }
+  .gk-faq-img, .gk-faq-img-wrap { width: 100% !important; flex: 0 0 auto !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var items = [].slice.call(document.querySelectorAll('.gk-acc2'));
+  if (!items.length) return;
+  function close(it){
+    it.classList.remove('gk-open');
+    var b = it.querySelector('.gk-acc2-body');
+    if (b) b.style.maxHeight = '0px';
+  }
+  function open(it){
+    it.classList.add('gk-open');
+    var b = it.querySelector('.gk-acc2-body');
+    if (b) b.style.maxHeight = b.scrollHeight + 'px';
+  }
+  items.forEach(function (it) {
+    close(it);
+    var head = it.querySelector('.gk-acc2-head');
+    if (!head) return;
+    head.addEventListener('click', function () {
+      var wasOpen = it.classList.contains('gk-open');
+      items.forEach(close);
+      if (!wasOpen) open(it);
+    });
+  });
+  window.addEventListener('resize', function(){
+    var o = document.querySelector('.gk-acc2.gk-open');
+    if (!o) return;
+    var b = o.querySelector('.gk-acc2-body');
+    if (b) b.style.maxHeight = b.scrollHeight + 'px';
+  }, { passive: true });
+});
+</script>
+<style>
+@media (min-width: 1280px) {
+  .gk-hero-2 {
+    min-height: 100vh !important;
+    padding-top: 132px !important;
+    padding-bottom: 0 !important;
+  }
+  .gk-hero-body {
+    flex: 1 1 auto !important;
+    align-items: center !important;
+    margin-top: 0 !important;
+    padding-bottom: 16px !important;
+  }
+  .gk-hero-media { height: min(660px, calc(100vh - 320px)) !important; }
+  .gk-trustbar {
+    margin-top: 0 !important;
+    padding-bottom: 28px !important;
+  }
+  .gk-hero-left .subheading {
+    font-size: 34px !important;
+    line-height: 1.12 !important;
+    white-space: nowrap !important;
+  }
+}
+@media (min-width: 1280px) and (max-height: 860px) {
+  .gk-hero-2 { padding-top: 96px !important; }
+  .gk-hero-left .gk-h1,
+  .gk-hero-left .gk-h1-green { font-size: 44px !important; line-height: 1.06 !important; }
+  .gk-hero-left .subheading  { font-size: 21px !important; }
+  .gk-hero-body { padding-bottom: 8px !important; }
+  .gk-trustbar  { padding-bottom: 16px !important; }
+}
+</style>
+<style>
+/* ===== MOBILE HERO FILLS THE PHONE SCREEN =====================
+   The hero measured 642px against an 844px viewport, so the dark
+   green .gk-proc section showed through below the fold on load
+   and read as a stray band rather than the next section.
+
+   Three rules:
+     min-height  - grow the hero to one screen so the green sits
+                   just past the fold. Nothing is hidden.
+     flex:0 0 auto on .gk-hero-body - stop the body absorbing the
+                   extra height. It centres its own children, so
+                   if it grows the logo, broccoli, headline and
+                   CTA all drift downward. Pinned, they stay put.
+     margin-top:auto on .gk-trustbar - send the new space between
+                   the CTA and the badge carousel, and park the
+                   carousel just above the fold.
+
+   svh, NOT vh, is what keeps the carousel visible. 100vh on a
+   phone means the viewport WITH THE ADDRESS BAR HIDDEN, ~100px
+   taller than what is actually on screen at load, so the hero
+   bottom - and the carousel sitting on it - falls underneath the
+   browser toolbar. 100svh is the small viewport, exactly what is
+   visible while the bar is shown. The plain 100vh line is a
+   fallback for browsers without svh.
+
+   MUST stay after the 1280px block above, which sets its own
+   min-height for desktop. This one is scoped to <=767px only.
+
+   Measured at 390x844: body top 78px, CTA ends 538px, carousel
+   754-804px, green starts 844px. Carousel in view, green not.
+   ============================================================ */
+@media (max-width: 767px) {
+  .gk-hero-2    { min-height: 100vh !important; min-height: 100svh !important; }
+  .gk-hero-body { flex: 0 0 auto !important; }
+  .gk-trustbar  { margin-top: auto !important; }
+}
+</style>
+<style>
+@keyframes gkBrocFloat {
+  0%, 100% { translate: 0 0;     scale: 1;     }
+  50%      { translate: 0 -16px; scale: 1.015; }
+}
+.gk-hero-media.gk-broc {
+  background: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+  filter: none !important;
+  rotate: 10deg;
+  animation: gkBrocFloat 6s ease-in-out infinite;
+  will-change: translate, scale;
+}
+@media (min-width: 1280px) {
+  .gk-hero-media.gk-broc {
+    width: auto !important;
+    aspect-ratio: 480 / 660;
+    max-width: 480px !important;
+    margin: 0 !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .gk-hero-media.gk-broc {
+    width: auto !important;
+    aspect-ratio: 480 / 660;
+    max-width: 400px !important;
+    height: min(560px, 58vh) !important;
+  }
+}
+@media (max-width: 767px) {
+  .gk-hero-media.gk-broc {
+    width: 240px !important;
+    max-width: 64% !important;
+    height: 210px !important;
+    aspect-ratio: auto !important;
+    display: block !important;
+    margin: -4px auto -6px !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  .gk-hero-media.gk-broc img {
+    filter: drop-shadow(0 14px 20px rgba(18,42,22,.26)) !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gk-hero-media.gk-broc { animation: none !important; }
+}
+</style>
+<style>
+/* ===== SECTION CONTENT ABOVE THE CLOUDS ======================
+   .bl-cloud is position:absolute + z-index:0. A positioned
+   element paints ABOVE in-flow content regardless of z-index, and
+   every content wrapper in these sections (bl-ship-head,
+   bl-city-head, bl-trust-panel, bl-testi-head, the card rows) is
+   position:static. So the clouds drift over the headings, the
+   cards and the CTA instead of behind them.
+
+   The page proves it by accident: inside .bl-testi the heading is
+   static and gets covered, while .gk-tslider right below it is
+   position:relative and renders correctly above the same cloud.
+
+   Written as "> *:not(.bl-cloud)" rather than a list of wrapper
+   class names so it keeps working if a section gains or renames a
+   child. z-index:1 clears the clouds' 0; the clouds themselves
+   are untouched, so the parallax drift still runs.
+   ============================================================ */
+.bl-ship    > *:not(.bl-cloud),
+.bl-city    > *:not(.bl-cloud),
+.bl-trust   > *:not(.bl-cloud),
+.bl-testi   > *:not(.bl-cloud),
+.gk-promise > *:not(.bl-cloud):not(.gk-cloud-2) {
+  position: relative;
+  z-index: 1;
+}
+</style>
+<style>
+.bl-city-row  { cursor: pointer; }
+.bl-city-body { max-height: 0; overflow: hidden; transition: max-height .45s ease; }
+.bl-city-ico  { transition: transform .3s ease; }
+.bl-city-item.bl-open .bl-city-ico { transform: rotate(180deg); }
+.bl-city-map-img:not([src]) { display: none !important; }
+@media (max-width: 767px) {
+  .bl-city {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .bl-city-inner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    width: 100% !important;
+    padding: 0 16px 20px !important;
+  }
+  .bl-city-times { width: 100% !important; flex: 0 0 auto !important; }
+  .bl-city-map-img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+  }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var items = [].slice.call(document.querySelectorAll('.bl-city-item'));
+  if (!items.length) return;
+  function close(it){
+    it.classList.remove('bl-open');
+    var b = it.querySelector('.bl-city-body');
+    if (b) b.style.maxHeight = '0px';
+  }
+  function open(it){
+    it.classList.add('bl-open');
+    var b = it.querySelector('.bl-city-body');
+    if (b) b.style.maxHeight = b.scrollHeight + 'px';
+  }
+  function resize(){
+    var o = document.querySelector('.bl-city-item.bl-open');
+    if (!o) return;
+    var b = o.querySelector('.bl-city-body');
+    if (b) b.style.maxHeight = b.scrollHeight + 'px';
+  }
+  items.forEach(function (it) {
+    close(it);
+    var head = it.querySelector('.bl-city-row');
+    if (!head) return;
+    head.addEventListener('click', function () {
+      var wasOpen = it.classList.contains('bl-open');
+      items.forEach(close);
+      if (!wasOpen) open(it);
+    });
+  });
+  [].slice.call(document.querySelectorAll('.bl-city-map-img')).forEach(function (img) {
+    img.addEventListener('load', resize);
+  });
+  window.addEventListener('resize', resize, { passive: true });
+});
+</script>
+<style>
+@media (prefers-reduced-motion: reduce) {
+  .gk-cloud-img, .gk-deco   { transform: none !important; }
+  .gk-nav, .gk-nav .gk-logo { transition: none !important; }
+  .gk-trust-track           { animation: none !important; }
+  .gk-steps .gk-step,
+  .gk-steps .gk-step .gk-step-num,
+  .gk-steps .gk-step .gk-step-title { transition: none !important; }
+  .gk-acc2-body             { transition: none !important; }
+}
+</style>
+<style>
+/* ===== TESTIMONIAL AVATAR PHOTOS ==============================
+   .bl-tavatar is a Webflow TEXT BLOCK holding initials ("ML"),
+   not an Image element, so there is no image slot to fill in the
+   Designer. Rather than rebuild 12 cards by hand in two projects,
+   this drops a real <img> inside each one, matched on the name in
+   .bl-tname.
+
+   The photos are the same 12 people already on getkong.de, served
+   from the Webflow CDN. CDN URLs are public and work cross-project,
+   so nothing needs uploading to Blute or Brokkoli assets --
+   verified all 12 load from blutelanding.webflow.io.
+
+   .bl-has-photo hides the initials underneath (transparent text +
+   font-size 0) instead of deleting them, so if an image ever 404s
+   the circle still looks intentional rather than empty.
+
+   Any name not in the map is skipped and keeps its initials, so
+   adding or renaming a testimonial cannot break the section.
+   ============================================================ */
+.bl-tavatar.bl-has-photo {
+  background: none !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+.bl-tavatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+</style>
+<script>
+(function () {
+  var B = 'https://cdn.prod.website-files.com/6a4eaafb7f632b1029afbd92/';
+  var K = 'https://cdn.prod.website-files.com/68c9321bb07942194167c67c/';
+  var AV = {
+    'Marta L.':   B + '6a4f841961304d3b9caa919a_avatar-marta.jpg',
+    'Andreas S.': B + '6a4f841b8f77d139b1f65083_avatar-andreas.jpg',
+    'Kleo R.':    K + '6a5e1a0dd73f5cda6c68cd64_Frame%2045.png',
+    'Lea M.':     B + '6a54a957ee7ff762362185e5_avatar-lea.jpg',
+    'Jonas R.':   B + '6a54a95948dc54aff9235366_avatar-jonas.jpg',
+    'Sabine K.':  B + '6a54a95addd009e53e23a815_avatar-sabine.jpg',
+    'Daniel P.':  B + '6a54a953dd0bbf131365c471_avatar-daniel.jpg',
+    'Mira T.':    B + '6a54a95c00b9a2a6ce3a29c9_avatar-mira.jpg',
+    'Thomas B.':  B + '6a54a95dbed6c6d576177748_avatar-thomas.jpg',
+    'Nadine S.':  B + '6a54a95f00b9a2a6ce3a2b17_avatar-nadine.jpg',
+    'Mehmet A.':  B + '6a54a96090c3dfa2b7aa6913_avatar-mehmet.jpg',
+    'Clara W.':   B + '6a54a956f05cb9b01235b54b_avatar-clara.jpg'
+  };
+  function fill() {
+    [].slice.call(document.querySelectorAll('.bl-tcard')).forEach(function (c) {
+      var av = c.querySelector('.bl-tavatar'), nm = c.querySelector('.bl-tname');
+      if (!av || !nm || av.querySelector('img')) return;   // already done
+      var url = AV[nm.textContent.trim()];
+      if (!url) return;                                     // unknown name, keep initials
+      var img = document.createElement('img');
+      img.className = 'bl-tavatar-img';
+      img.src = url;
+      img.alt = nm.textContent.trim();
+      img.loading = 'lazy';
+      av.appendChild(img);
+      av.classList.add('bl-has-photo');
+    });
+  }
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  ready(function () { fill(); setTimeout(fill, 400); });   // second pass for late-built cards
+})();
+</script>
+<script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var tries = 0;
+  (function reinit(){
+    if (window.Trustpilot) {
+      [].slice.call(document.querySelectorAll('.trustpilot-widget')).forEach(function (w) {
+        window.Trustpilot.loadFromElement(w, true);
+      });
+      return;
+    }
+    if (++tries < 40) setTimeout(reinit, 400);
+  })();
+});
+</script>
+
+<!-- ============================================================
+     SECTION CLOUDS — SCROLL DRIFT
+     Paste at the END of the existing Footer Code.
+     APPEND ONLY. Safe to paste twice (guarded).
+
+     WHY THE SECTION CLOUDS NEVER MOVED
+     The existing drift script selects:
+         document.querySelectorAll('.gk-cloud, .gk-cloud-2')
+     The hero clouds carry .gk-cloud, so they are picked up and
+     animated. The clouds in the later sections carry .bl-cloud --
+     a different class that selector never matches. They were
+     never given data-speed, never given a transform, and so have
+     always been completely static.
+
+     Verified on the live page:
+         .gk-cloud / .gk-cloud-2   5 elements, 5 with data-speed
+         .bl-cloud                 6 elements, 0 with data-speed
+                                   6 inline transforms = "(none)"
+
+     WHAT THIS DOES
+     Runs the SAME maths on .bl-cloud so the motion is identical
+     in character to the hero -- same delta formula, same speed
+     band, same alternating direction. Nothing about the hero
+     behaviour changes.
+
+     TWO DELIBERATE DIFFERENCES FROM THE ORIGINAL
+
+     1. Scroll listener as well as requestAnimationFrame.
+        The original relies on rAF alone. Chrome throttles rAF to
+        zero in a background or hidden tab, so the drift silently
+        stops and only resumes on refocus. Listening to scroll as
+        well means the position is always correct.
+
+     2. The shift is clamped to +/-90px.
+        delta grows without bound the further a cloud sits from the
+        viewport centre, so on a long page an off-screen cloud can
+        compute a shift of 400px or more. It corrects itself as you
+        scroll toward it, but the clamp keeps the motion in the
+        subtle range the design intends and stops any cloud being
+        flung outside its section.
+
+     Respects prefers-reduced-motion, matching the original.
+     ============================================================ -->
+<script>
+(function () {
+  if (window.__blCloudDrift) return;          // already installed
+  window.__blCloudDrift = true;
+
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+
+  ready(function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var clouds = [].slice.call(document.querySelectorAll('.bl-cloud'));
+    if (!clouds.length) return;
+
+    var MAX = 90;   // px, clamp
+
+    clouds.forEach(function (c, i) {
+      c.setAttribute('data-bl-dir',   (i % 2 === 0) ? -1 : 1);
+      c.setAttribute('data-bl-speed', (0.20 + (i % 3) * 0.06).toFixed(3));
+      var img = c.querySelector('.gk-cloud-img');
+      if (img) img.style.willChange = 'transform';
+    });
+
+    var ticking = false;
+
+    function apply() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      clouds.forEach(function (c) {
+        var img = c.querySelector('.gk-cloud-img') || c;
+        var r   = c.getBoundingClientRect();
+
+        // skip anything nowhere near the viewport -- saves work on a long page
+        if (r.bottom < -vh || r.top > vh * 2) return;
+
+        var delta = (r.top + r.height / 2) - vh / 2;
+        var s     = parseFloat(c.getAttribute('data-bl-speed')) || 0.20;
+        var dir   = parseFloat(c.getAttribute('data-bl-dir'))   || -1;
+        var shift = dir * -delta * s;
+
+        if (shift >  MAX) shift =  MAX;
+        if (shift < -MAX) shift = -MAX;
+
+        img.style.transform = 'translateX(' + shift.toFixed(1) + 'px)';
+      });
+      ticking = false;
+    }
+
+    function request() {
+      if (!ticking) { ticking = true; requestAnimationFrame(apply); }
+    }
+
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
+    apply();
+  });
+})();
+</script>
